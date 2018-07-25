@@ -32,22 +32,25 @@
     -->
     <mvc:default-servlet-handler/>
     <!--C.添加对静态资源的访问==自行修改自己静态资源文件目录-->
+    <mvc:resources location="/bootstrap/" mapping="/bootstrap/**"/>
     <mvc:resources location="/js/" mapping="/js/**"/>
     <mvc:resources location="/images/" mapping="/images/**"/>
     <mvc:resources location="/css/" mapping="/css/**"/>
 
 
     <!--拦截器==自行添加-->
-    <!--<mvc:interceptors>-->
-        <!--<mvc:interceptor>-->
-            <!--&lt;!&ndash;拦截所有&ndash;&gt;-->
-            <!--<mvc:mapping path="/order/*"/>-->
-            <!--&lt;!&ndash;不进行拦截&ndash;&gt;-->
-            <!--&lt;!&ndash;<mvc:exclude-mapping path="/adm/*"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<mvc:exclude-mapping path="/"/>&ndash;&gt;-->
-            <!--<bean class="org.com.filter.F0_filter"/>-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--拦截所有-->
+            <mvc:mapping path="/item/selectAllMy"/>
+            <mvc:mapping path="/item/selectAllByItemNameMy"/>
+            <!--不进行拦截-->
+            <!--<mvc:exclude-mapping path="/adm/*"/>-->
+            <!--<mvc:exclude-mapping path="/"/>-->
+            <bean class="org.com.filter.F0_User"/>
+
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 
     <!--文件-->

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.com.dao.TblItemMapper">
+  <resultMap id="BaseResultMap" type="org.com.entity.TblItem">
+    <id column="item_id" jdbcType="INTEGER" property="itemId" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_url" jdbcType="VARCHAR" property="itemUrl" />
+    <result column="item_git_url" jdbcType="VARCHAR" property="itemGitUrl" />
+    <result column="Item_state" jdbcType="INTEGER" property="itemState" />
+    <result column="Item_time" jdbcType="TIMESTAMP" property="itemTime" />
+    <result column="Item_describe" jdbcType="VARCHAR" property="itemDescribe" />
+    <result column="customer_id" jdbcType="INTEGER" property="customerId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    item_id, item_name, item_url, item_git_url, Item_state, Item_time, Item_describe, 
+    customer_id
+  </sql>
+  <select id="selectByExample" parameterType="org.com.entity.TblItemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_item
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_item
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.com.entity.TblItemExample">
+    delete from tbl_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.com.entity.TblItem">
+    insert into tbl_item (item_id, item_name, item_url, 
+      item_git_url, Item_state, Item_time, 
+      Item_describe, customer_id)
+    values (#{itemId,jdbcType=INTEGER}, #{itemName,jdbcType=VARCHAR}, #{itemUrl,jdbcType=VARCHAR}, 
+      #{itemGitUrl,jdbcType=VARCHAR}, #{itemState,jdbcType=INTEGER}, #{itemTime,jdbcType=TIMESTAMP}, 
+      #{itemDescribe,jdbcType=VARCHAR}, #{customerId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.com.entity.TblItem">
+    insert into tbl_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        item_id,
+      </if>
+      <if test="itemName != null">
+        item_name,
+      </if>
+      <if test="itemUrl != null">
+        item_url,
+      </if>
+      <if test="itemGitUrl != null">
+        item_git_url,
+      </if>
+      <if test="itemState != null">
+        Item_state,
+      </if>
+      <if test="itemTime != null">
+        Item_time,
+      </if>
+      <if test="itemDescribe != null">
+        Item_describe,
+      </if>
+      <if test="customerId != null">
+        customer_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="itemName != null">
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemUrl != null">
+        #{itemUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemGitUrl != null">
+        #{itemGitUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemState != null">
+        #{itemState,jdbcType=INTEGER},
+      </if>
+      <if test="itemTime != null">
+        #{itemTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemDescribe != null">
+        #{itemDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null">
+        #{customerId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.com.entity.TblItemExample" resultType="java.lang.Long">
+    select count(*) from tbl_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tbl_item
+    <set>
+      <if test="record.itemId != null">
+        item_id = #{record.itemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemName != null">
+        item_name = #{record.itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemUrl != null">
+        item_url = #{record.itemUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemGitUrl != null">
+        item_git_url = #{record.itemGitUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemState != null">
+        Item_state = #{record.itemState,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemTime != null">
+        Item_time = #{record.itemTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.itemDescribe != null">
+        Item_describe = #{record.itemDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerId != null">
+        customer_id = #{record.customerId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tbl_item
+    set item_id = #{record.itemId,jdbcType=INTEGER},
+      item_name = #{record.itemName,jdbcType=VARCHAR},
+      item_url = #{record.itemUrl,jdbcType=VARCHAR},
+      item_git_url = #{record.itemGitUrl,jdbcType=VARCHAR},
+      Item_state = #{record.itemState,jdbcType=INTEGER},
+      Item_time = #{record.itemTime,jdbcType=TIMESTAMP},
+      Item_describe = #{record.itemDescribe,jdbcType=VARCHAR},
+      customer_id = #{record.customerId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.com.entity.TblItem">
+    update tbl_item
+    <set>
+      <if test="itemName != null">
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemUrl != null">
+        item_url = #{itemUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemGitUrl != null">
+        item_git_url = #{itemGitUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemState != null">
+        Item_state = #{itemState,jdbcType=INTEGER},
+      </if>
+      <if test="itemTime != null">
+        Item_time = #{itemTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemDescribe != null">
+        Item_describe = #{itemDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.com.entity.TblItem">
+    update tbl_item
+    set item_name = #{itemName,jdbcType=VARCHAR},
+      item_url = #{itemUrl,jdbcType=VARCHAR},
+      item_git_url = #{itemGitUrl,jdbcType=VARCHAR},
+      Item_state = #{itemState,jdbcType=INTEGER},
+      Item_time = #{itemTime,jdbcType=TIMESTAMP},
+      Item_describe = #{itemDescribe,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=INTEGER}
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </update>
+</mapper>
